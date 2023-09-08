@@ -7,6 +7,21 @@ Implementing python and influxdb with grafana for dashboards, provides simple vi
 
 ![Grafana dashboard displaying system stats](./Imgs/Grafana.png)
 
+## Configuration 
+
+1. Edit `creds.toml` to point the influxdb credentials file
+    ```
+     with InfluxDBClient.from_config_file("creds.toml","r", encoding="utf-8") as client:
+    ```
+2. Add
+   ```
+   bucket_name=""
+   org=""
+    ```
+3. Create virtual env and `pip install influxdb_client pyinstaller`
+4. `pyinstaller --onefile influxdb_liveness.py` to package the application as an executable
+5. Change `ExecStart=influxdb_liveness > /dev/null &` in the .service file and `influxdb_liveliness_PID=pidof influxdb_liveness | cut -f5 -d " "` in the .sh file to reflect the current path of the packaged executable.
+
 
 > **HINT** The final execution of writes to db happens in loops. Three different loops. 
     The way to execute three loops synchronously is as processes
@@ -33,3 +48,4 @@ def main():
 
 ```
 > **HINT** Python implementation on windows varies from on Linux thus the linux and windows folders
+> **HINT** The program runs as an executable packaged by pyinstaller
