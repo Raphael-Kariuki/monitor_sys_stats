@@ -32,3 +32,4 @@ def main():
     Process(target=loop_c).start()
 
 ```
+> **HINT** Python implementation on windows varies from on Linux
