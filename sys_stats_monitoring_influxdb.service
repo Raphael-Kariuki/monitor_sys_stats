@@ -1,0 +1,11 @@
+[Unit]
+Description=Start the Executable to monitor sys stats on boot
+After=basic.target
+
+[Service]
+Type=oneshot
+User=sys_stats
+ExecStart=influxdb_liveness > /dev/null &
+
+[Install]
+WantedBy=multi-user.target
