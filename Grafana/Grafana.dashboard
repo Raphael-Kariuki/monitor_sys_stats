@@ -1,0 +1,92 @@
+{
+  "datasource": {
+    "uid": "b09908b7-a103-4925-91b4-ea215ab4c826",
+    "type": "influxdb"
+  },
+  "description": "CPU,Memory,Disk ",
+  "fieldConfig": {
+    "defaults": {
+      "custom": {
+        "drawStyle": "line",
+        "lineInterpolation": "linear",
+        "barAlignment": 0,
+        "lineWidth": 1,
+        "fillOpacity": 19,
+        "gradientMode": "opacity",
+        "spanNulls": false,
+        "showPoints": "auto",
+        "pointSize": 5,
+        "stacking": {
+          "mode": "none",
+          "group": "A"
+        },
+        "axisPlacement": "auto",
+        "axisLabel": "",
+        "axisColorMode": "text",
+        "scaleDistribution": {
+          "type": "linear"
+        },
+        "axisCenteredZero": false,
+        "hideFrom": {
+          "tooltip": false,
+          "viz": false,
+          "legend": false
+        },
+        "thresholdsStyle": {
+          "mode": "off"
+        }
+      },
+      "color": {
+        "mode": "palette-classic"
+      },
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          },
+          {
+            "color": "red",
+            "value": 80
+          }
+        ]
+      },
+      "unit": "percent"
+    },
+    "overrides": []
+  },
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 8
+  },
+  "id": 1,
+  "options": {
+    "tooltip": {
+      "mode": "single",
+      "sort": "none"
+    },
+    "legend": {
+      "showLegend": true,
+      "displayMode": "list",
+      "placement": "bottom",
+      "calcs": []
+    }
+  },
+  "targets": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "b09908b7-a103-4925-91b4-ea215ab4c826"
+      },
+      "key": "Q-ba99e96d-2b15-4800-b6eb-4e389fb979ee-0",
+      "query": "from(bucket: \"sys_stats4\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"Hostname\"] == \"{Add hostname of system involved}\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"cpu_stats\" or r[\"_measurement\"] == \"disk_stats\" or r[\"_measurement\"] == \"mem_stats\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Usage\" or r[\"_field\"] == \"cpupercent\" or r[\"_field\"] == \"used_ram\")",
+      "refId": "A"
+    }
+  ],
+  "title": "Portainer-saf SysStats",
+  "type": "timeseries"
+}
