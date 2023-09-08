@@ -48,5 +48,6 @@ def main():
 
 ```
 > **HINT** Python implementation on windows varies from on Linux thus the linux and windows folders
-> 
+
+
 > **HINT** The program runs as an executable packaged by pyinstaller
