@@ -19,8 +19,11 @@ Implementing python and influxdb with grafana for dashboards, provides simple vi
    org=""
     ```
 3. Create virtual env and `pip install influxdb_client pyinstaller`
-4. `pyinstaller --onefile influxdb_liveness.py` to package the application as an executable
-5. Change `ExecStart=influxdb_liveness > /dev/null &` in the .service file and `influxdb_liveliness_PID=pidof influxdb_liveness | cut -f5 -d " "` in the .sh file to reflect the current path of the packaged executable.
+
+> **HINT** The program runs as an executable packaged by pyinstaller
+
+5. `pyinstaller --onefile influxdb_liveness.py` to package the application as an executable
+6. Change `ExecStart=influxdb_liveness > /dev/null &` in the .service file and `influxdb_liveliness_PID=pidof influxdb_liveness | cut -f5 -d " "` in the .sh file to reflect the current path of the packaged executable.
 
 
 > **HINT** The final execution of writes to db happens in loops. Three different loops. 
@@ -50,4 +53,4 @@ def main():
 > **HINT** Python implementation on windows varies from on Linux thus the linux and windows folders
 
 
-> **HINT** The program runs as an executable packaged by pyinstaller
+
