@@ -3,7 +3,8 @@ function Get-CpuStats{
     $cpuCounter = Get-Counter '\Processor(_Total)\% Processor Time'
     $cpuUsage = [math]::Round($cpuCounter.CounterSamples.CookedValue, 2)
 
-    return @{"CpuUsage"=$cpuUsage}
+    #return @{"CpuUsage"=$cpuUsage}
+    return $cpuUsage
 
 }
 
@@ -14,7 +15,8 @@ function Get-MemStats{
     $freeMemory = [math]::Round($memoryInfo.FreePhysicalMemory / 1MB, 2)
     $usedMemory_percentage = (($totalMemory - $freeMemory) / $totalMemory ) * 100
     
-    return @{"MemUsage"=$usedMemory_percentage}
+    #return @{"MemUsage"=$usedMemory_percentage}
+    return $usedMemory_percentage
 }
 
 function Get-DiskStats {
@@ -40,19 +42,31 @@ function Get-DiskStats {
 
 function Get-Hostname{
     $hostname = HOSTNAME.EXE
-    return @{"Hostname"=$hostname}
+    #return @{"Hostname"=$hostname}
+    return $hostname
 }
 
+$sys_stats = [Ordered]@{}
+$hostname = Get-Hostname
+$disk = Get-DiskStats
+$mem = Get-MemStats
+$cpu = Get-CpuStats
 
-Write-Output "[" > stats.json
-Get-Hostname | ConvertTo-Json >> stats.json
-Write-Output "," >> stats.json
-Get-CpuStats| ConvertTo-Json >> stats.json
-Write-Output "," >> stats.json
-Get-DiskStats| ConvertTo-Json >> stats.json
-Write-Output "," >> stats.json
-Get-MemStats| ConvertTo-Json >> stats.json
-Write-Output "]" >> stats.json
+$sys_stats.Add("Hostname",$hostname)
+$sys_stats.Add("MemUsage",$mem)
+$sys_stats.Add("DiskUsage",$disk)
+$sys_stats.Add("CPUUsage",$cpu)
+
+$sys_stats | ConvertTo-Json > .\stats.json
+#'{' > stats.json
+#Get-Hostname | ConvertTo-Json >> stats.json
+#',' >> stats.json
+#Get-CpuStats| ConvertTo-Json >> stats.json
+#',' >> stats.json
+#Get-DiskStats| ConvertTo-Json >> stats.json
+#',' >> stats.json
+#Get-MemStats| ConvertTo-Json >> stats.json
+#'}' >> stats.json
 
 
 

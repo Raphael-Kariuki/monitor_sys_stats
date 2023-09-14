@@ -2,3 +2,4 @@ __*
 sys_stats_venv
 *.ipynb
 *.json
+*.config
