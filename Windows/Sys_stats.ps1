@@ -50,18 +50,40 @@ function Get-Hostname{
     return $hostname
 }
 
-$sys_stats = [Ordered]@{}
-$hostname = Get-Hostname
-$disk = Get-DiskStats
-$mem = Get-MemStats
-$cpu = Get-CpuStats
+function Get-EpochDate{
+    $date = Get-Date -UFormat %s
+    return $date
+}
 
-$sys_stats.Add("Hostname",$hostname)
-$sys_stats.Add("MemUsage",$mem)
-$sys_stats.Add("DiskUsage",$disk)
-$sys_stats.Add("CPUUsage",$cpu)
 
-$sys_stats | ConvertTo-Json > .\stats.json
+function Get-JsonStats{
+
+    $sys_stats = [Ordered]@{}
+    $hostname = Get-Hostname
+    $disk = Get-DiskStats
+    $mem = Get-MemStats
+    $cpu = Get-CpuStats
+    $date = Get-EpochDate
+
+    $sys_stats.Add("EpochDate",$date)
+    $sys_stats.Add("Hostname",$hostname)
+    $sys_stats.Add("MemUsage",$mem)
+    $sys_stats.Add("DiskUsage",$disk)
+    $sys_stats.Add("CPUUsage",$cpu)
+
+    $sys_stats | ConvertTo-Json > "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
+}
+
+
+
+while (1 -eq 1) {
+    Write-Host "Running"
+    Get-JsonStats
+    Write-Host "Sleeping"
+    Start-Sleep -Milliseconds 30000
+    
+}
+
 #'{' > stats.json
 #Get-Hostname | ConvertTo-Json >> stats.json
 #',' >> stats.json
