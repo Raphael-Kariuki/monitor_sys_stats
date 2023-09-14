@@ -1,7 +1,8 @@
 
 function Get-CpuStats{
     $cpuCounter = Get-Counter '\Processor(_Total)\% Processor Time'
-    $cpuUsage = [math]::Round($cpuCounter.CounterSamples.CookedValue, 2)
+    #$cpuUsage = [math]::Round($cpuCounter.CounterSamples.CookedValue, 2)
+    $cpuUsage = $cpuCounter.CounterSamples.CookedValue
 
     #return @{"CpuUsage"=$cpuUsage}
     return $cpuUsage
@@ -11,8 +12,10 @@ function Get-CpuStats{
 
 function Get-MemStats{
     $memoryInfo = Get-CimInstance -ClassName Win32_OperatingSystem
-    $totalMemory = [math]::Round($memoryInfo.TotalVisibleMemorySize / 1MB, 2)
-    $freeMemory = [math]::Round($memoryInfo.FreePhysicalMemory / 1MB, 2)
+    #$totalMemory = [math]::Round($memoryInfo.TotalVisibleMemorySize / 1MB, 2)
+    $totalMemory = $memoryInfo.TotalVisibleMemorySize
+    #$freeMemory = [math]::Round($memoryInfo.FreePhysicalMemory / 1MB, 2)
+    $freeMemory = $memoryInfo.FreePhysicalMemory
     $usedMemory_percentage = (($totalMemory - $freeMemory) / $totalMemory ) * 100
     
     #return @{"MemUsage"=$usedMemory_percentage}
@@ -32,7 +35,8 @@ function Get-DiskStats {
         $totalSpace = $disk.Size
         $freeSpace = $disk.FreeSpace
         $usedSpace = $totalSpace - $freeSpace
-        $UsedPercentage = [math]::Round(($usedSpace/$totalSpace ) * 100, 2)
+        #$UsedPercentage = [math]::Round(($usedSpace/$totalSpace ) * 100, 2)
+        $UsedPercentage = ($usedSpace/$totalSpace ) * 100
         #$diskStats += $UsedPercentage
         $diskStats.Add($driveLetter, $UsedPercentage)
     }
