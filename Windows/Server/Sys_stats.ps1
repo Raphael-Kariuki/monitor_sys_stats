@@ -65,8 +65,8 @@ function Get-JsonStats{
     $cpu = Get-CpuStats
     $date = Get-EpochDate
 
-    #"Hostname"| Out-File -FilePath "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
-    #Add-Content -Path "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json" -Value $hostname
+    #"Hostname"| Out-File -FilePath <path>
+    #Add-Content -Path <path> -Value $hostname
 
     $sys_stats.Add("EpochDate",$date)
     $sys_stats.Add("Hostname",$hostname)
