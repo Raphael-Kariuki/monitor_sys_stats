@@ -65,34 +65,39 @@ function Get-JsonStats{
     $cpu = Get-CpuStats
     $date = Get-EpochDate
 
+    #"Hostname"| Out-File -FilePath "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
+    #Add-Content -Path "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json" -Value $hostname
+
     $sys_stats.Add("EpochDate",$date)
     $sys_stats.Add("Hostname",$hostname)
     $sys_stats.Add("MemUsage",$mem)
     $sys_stats.Add("DiskUsage",$disk)
     $sys_stats.Add("CPUUsage",$cpu)
 
-    $sys_stats | ConvertTo-Json > "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
+    #Convert to json coz why not, #parsability is key
+    $json = $sys_stats | ConvertTo-Json
+    #Write-Output, Out-File, {}>, >>} -> Redirectors - All tend to add some characters at the start of the file content, so add the delete file 
+    Add-Content -Path "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"  -Value $json
 }
 
 
 
 while (1 -eq 1) {
-    Write-Host "Running"
+    Write-Host "Running after deletion"
+    try {
+        Remove-Item -Path "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
+    }
+    catch {
+        "" > "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
+    }
+   
     Get-JsonStats
     Write-Host "Sleeping"
     Start-Sleep -Milliseconds 30000
     
 }
 
-#'{' > stats.json
-#Get-Hostname | ConvertTo-Json >> stats.json
-#',' >> stats.json
-#Get-CpuStats| ConvertTo-Json >> stats.json
-#',' >> stats.json
-#Get-DiskStats| ConvertTo-Json >> stats.json
-#',' >> stats.json
-#Get-MemStats| ConvertTo-Json >> stats.json
-#'}' >> stats.json
+
 
 
 
