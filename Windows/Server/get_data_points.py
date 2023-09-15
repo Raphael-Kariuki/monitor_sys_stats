@@ -5,7 +5,7 @@ import time
 
 # %%
 def getContent():
-    url = "http://192.168.11.140/stats.json"
+    url = "http://<ip>/stats.json"
     while True:
         try:
             resp = requests.get(url)
