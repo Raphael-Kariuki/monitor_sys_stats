@@ -77,7 +77,7 @@ function Get-JsonStats{
     #Convert to json coz why not, #parsability is key
     $json = $sys_stats | ConvertTo-Json
     #Write-Output, Out-File, {}>, >>} -> Redirectors - All tend to add some characters at the start of the file content, so add the delete file 
-    Add-Content -Path "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"  -Value $json
+    Add-Content -Path <path>  -Value $json
 }
 
 
