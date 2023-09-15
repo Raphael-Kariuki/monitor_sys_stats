@@ -85,10 +85,10 @@ function Get-JsonStats{
 while (1 -eq 1) {
     Write-Host "Running after deletion"
     try {
-        Remove-Item -Path "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
+        Remove-Item -Path <path>
     }
     catch {
-        "" > "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
+        "" > <path>
     }
    
     Get-JsonStats
