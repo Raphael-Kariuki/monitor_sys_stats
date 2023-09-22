@@ -87,6 +87,6 @@
       "refId": "A"
     }
   ],
-  "title": "Portainer-saf SysStats",
+  "title": "<hostname> SysStats",
   "type": "timeseries"
 }

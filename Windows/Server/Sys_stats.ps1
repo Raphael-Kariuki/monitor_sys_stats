@@ -65,8 +65,8 @@ function Get-JsonStats{
     $cpu = Get-CpuStats
     $date = Get-EpochDate
 
-    #"Hostname"| Out-File -FilePath "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
-    #Add-Content -Path "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json" -Value $hostname
+    #"Hostname"| Out-File -FilePath <path>
+    #Add-Content -Path <path> -Value $hostname
 
     $sys_stats.Add("EpochDate",$date)
     $sys_stats.Add("Hostname",$hostname)
@@ -77,7 +77,7 @@ function Get-JsonStats{
     #Convert to json coz why not, #parsability is key
     $json = $sys_stats | ConvertTo-Json
     #Write-Output, Out-File, {}>, >>} -> Redirectors - All tend to add some characters at the start of the file content, so add the delete file 
-    Add-Content -Path "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"  -Value $json
+    Add-Content -Path <path>  -Value $json
 }
 
 
@@ -85,10 +85,10 @@ function Get-JsonStats{
 while (1 -eq 1) {
     Write-Host "Running after deletion"
     try {
-        Remove-Item -Path "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
+        Remove-Item -Path <path>
     }
     catch {
-        "" > "C:\Users\test\Downloads\monitor_sys_stats\Windows\IIS\stats.json"
+        "" > <path>
     }
    
     Get-JsonStats
